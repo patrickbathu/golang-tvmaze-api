@@ -1,0 +1,29 @@
+# Systemd service file
+# Para usar no Linux, copie para /etc/systemd/system/
+# sudo cp github-api.service /etc/systemd/system/
+# sudo systemctl daemon-reload
+# sudo systemctl enable github-api
+# sudo systemctl start github-api
+
+[Unit]
+Description=GitHub API Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/github-api
+ExecStart=/opt/github-api/api-server
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Variáveis de ambiente
+Environment="PORT=8080"
+
+# Limites de recursos
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

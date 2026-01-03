@@ -1,0 +1,8 @@
+# Ignorar arquivos desnecessários no build
+*.md
+.git
+.gitignore
+*.env
+docker-compose.yml
+.DS_Store
+primeiroGoLang.go

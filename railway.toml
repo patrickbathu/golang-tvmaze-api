@@ -1,0 +1,12 @@
+# Railway/Render deployment configuration
+# Este arquivo é detectado automaticamente por plataformas cloud
+
+# Build command
+buildCommand = "go build -o bin/api-server api.go"
+
+# Start command
+startCommand = "./bin/api-server"
+
+# Healthcheck
+healthCheckPath = "/"
+healthCheckInterval = 30
