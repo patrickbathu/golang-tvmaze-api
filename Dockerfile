@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build da aplicação
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-server api.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-server cmd/api/main.go
 
 # Runtime stage
 FROM alpine:latest

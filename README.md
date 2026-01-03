@@ -1,18 +1,20 @@
 # 📺 TVMaze API - Go Microservice
 
-API REST em Go que consulta a programação de TV em tempo real usando a [TVMaze API](https://www.tvmaze.com/api).
+API REST profissional em Go que consulta a programação de TV em tempo real usando a [TVMaze API](https://www.tvmaze.com/api) e informações de usuários do [GitHub](https://api.github.com).
+
+**✨ Versão 3.0.0** - Arquitetura profissional com separação de camadas!
 
 ## 🚀 Como Executar
 
 ### Método 1: Executar diretamente
 ```bash
-go run tvmaze-api.go
+go run cmd/api/main.go
 ```
 
 ### Método 2: Compilar e executar
 ```bash
-go build -o tvmaze-server tvmaze-api.go
-./tvmaze-server
+make build
+./bin/api-server
 ```
 
 ### Método 3: Com Docker
@@ -47,44 +49,91 @@ curl "http://localhost:8080/search?q=friends"
 curl "http://localhost:8080/show?id=431"
 ```
 
+### 6. Filtrar por gênero
+```bash
+curl "http://localhost:8080/genre?genre=Drama&country=US"
+```
+
+### 7. O que está passando agora
+```bash
+curl "http://localhost:8080/now?country=US"
+```
+
+### 8. Usuário do GitHub
+```bash
+curl "http://localhost:8080/api/user?username=torvalds"
+```
+
+### 9. Documentação Interativa
+```
+http://localhost:8080/docs
+```
+
 ## 🧪 Testes
 
 ```bash
 # Executar testes
-go test -v tvmaze-api.go tvmaze-api_test.go
+make test
 
 # Com coverage
-go test -cover tvmaze-api.go tvmaze-api_test.go
+make test-coverage
+
+# Testar APIs
+make test-api
 ```
 
-## 📦 Estrutura do Projeto
+## 📦 Estrutura do Projeto (Arquitetura Profissional)
 
 ```
-.
-├── tvmaze-api.go           # 🎯 API principal
-├── tvmaze-api_test.go      # 🧪 Testes unitários
-├── api.go                  # 📦 API GitHub (outro exemplo)
-├── api_test.go             # 🧪 Testes API GitHub
-├── go.mod                  # 📦 Dependências
-├── Dockerfile              # 🐳 Container
-├── docker-compose.yml      # 🎼 Orquestração
-└── examples/
-    └── primeiroGoLang.go   # 👋 Hello World
+goLang/
+├── cmd/
+│   └── api/
+│       └── main.go              # 🎯 Entry point
+├── internal/
+│   ├── models/                  # 📊 Modelos de dados
+│   │   ├── tvmaze.go
+│   │   ├── github.go
+│   │   └── response.go
+│   ├── clients/                 # 🌐 Clientes HTTP
+│   │   ├── tvmaze.go
+│   │   └── github.go
+│   ├── services/                # 💼 Lógica de negócio
+│   │   ├── tvmaze.go
+│   │   ├── tvmaze_test.go
+│   │   ├── github.go
+│   │   └── github_test.go
+│   ├── handlers/                # 🎮 Handlers HTTP
+│   │   ├── tvmaze.go
+│   │   ├── github.go
+│   │   └── docs.go
+│   ├── middleware/              # 🔧 Middlewares
+│   │   └── middleware.go
+│   └── router/                  # 🛣️ Roteamento
+│       └── router.go
+├── pkg/
+│   └── utils/                   # 🔨 Utilitários
+│       └── strings.go
+├── go.mod
+├── Makefile
+├── Dockerfile
+└── README.md
 ```
 
-## �� Deploy
+### 🏗️ Arquitetura em Camadas
+
+**Cliente HTTP** → **Router** → **Middleware** → **Handler** → **Service** → **Client** → **API Externa**
+
+Veja [ESTRUTURA.md](ESTRUTURA.md) para detalhes completos da arquitetura.
+
+## 📚 Deploy
 
 Ver documentação completa em:
+- `ESTRUTURA.md` - Arquitetura e organização do projeto
 - `DEPLOY_TVMAZE.md` - Guia completo de deploy
-- `TVMAZE_RESUMO.md` - Resumo do projeto
-- `ARQUITETURA.md` - Arquitetura da aplicação
+- `ARQUITETURA.md` - Diagrama da aplicação
 
 ### Deploy Rápido (Railway)
 ```bash
-# Instalar CLI
-brew install railway
-
-# Deploy
 railway login
 railway init
 railway up
@@ -92,6 +141,7 @@ railway up
 
 ## 📚 Documentação Completa
 
+- **ESTRUTURA.md** - 🆕 Arquitetura profissional do projeto
 - **DEPLOY_TVMAZE.md** - Guia de deploy em várias plataformas
 - **README_TVMAZE.md** - Documentação detalhada da API
 - **TVMAZE_RESUMO.md** - Resumo completo do projeto
@@ -99,14 +149,28 @@ railway up
 
 ## 🎯 Conceitos Go Implementados
 
+- ✅ Arquitetura em camadas (Clean Architecture)
+- ✅ Dependency Injection
+- ✅ Separation of Concerns
 - ✅ Structs e JSON tags
 - ✅ HTTP Server e Client
 - ✅ Error handling
 - ✅ Context e graceful shutdown
-- ✅ Middleware
-- ✅ Testing
-- ✅ Goroutines
-- ✅ Channels
+- ✅ Middleware pattern
+- ✅ Testing (unit tests)
+- ✅ Goroutines e Channels
+- ✅ Package organization (internal, pkg, cmd)
+
+## 🌟 Diferenciais Profissionais
+
+✨ **Arquitetura em Camadas**: Separação clara de responsabilidades  
+✨ **Testabilidade**: Cada camada pode ser testada isoladamente  
+✨ **Manutenibilidade**: Código organizado e fácil de manter  
+✨ **Escalabilidade**: Fácil adicionar novos recursos  
+✨ **Padrões de Mercado**: Estrutura seguindo best practices Go  
+✨ **Documentação Interativa**: Interface web para testar endpoints  
+✨ **Graceful Shutdown**: Encerramento seguro do servidor  
+✨ **Production-Ready**: Pronto para ambientes profissionais  
 
 ## 📝 Licença
 
@@ -114,4 +178,5 @@ MIT
 
 ---
 
-Criado como projeto de aprendizado de Go Lang 🐹
+Criado como projeto de aprendizado de Go Lang 🐹  
+Refatorado seguindo padrões profissionais de mercado 🚀
